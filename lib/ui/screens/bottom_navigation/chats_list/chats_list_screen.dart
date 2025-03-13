@@ -7,6 +7,7 @@ import 'package:chat_app/core/services/database_service.dart';
 import 'package:chat_app/ui/screens/bottom_navigation/chats_list/chat_list_viewmodel.dart';
 import 'package:chat_app/ui/screens/other/user_provider.dart';
 import 'package:chat_app/ui/widgets/textfield_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -26,10 +27,18 @@ class ChatsListScreen extends StatelessWidget {
           child: Column(
             children: [
               30.verticalSpace,
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Chats", style: h)),
-              20.verticalSpace,
+              Row(
+                children: [
+                  Text("Chats", style: h),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.logout),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                  )
+                ],
+              ),
               CustomTextfield(
                 isSearch: true,
                 hintText: "Search here...",
@@ -105,7 +114,11 @@ class ChatTile extends StatelessWidget {
             ),
       title: Text(user.name!),
       subtitle: Text(
-        user.lastMessage != null ? user.lastMessage!["content"] : "",
+        (user.lastMessage != null &&
+                user.lastMessage!['senderId'] ==
+                    FirebaseAuth.instance.currentUser!.uid)
+            ? user.lastMessage!["content"]
+            : "",
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),

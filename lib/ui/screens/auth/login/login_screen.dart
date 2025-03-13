@@ -69,11 +69,14 @@ class LoginScreen extends StatelessWidget {
                       style: body.copyWith(color: grey),
                     ),
                     InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, signup);
-                        },
-                        child: Text("Signup",
-                            style: body.copyWith(fontWeight: FontWeight.bold)))
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, signup);
+                      },
+                      child: Text(
+                        "Signup",
+                        style: body.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    )
                   ],
                 ),
               ],

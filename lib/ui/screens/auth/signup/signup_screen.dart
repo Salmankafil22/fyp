@@ -24,7 +24,7 @@ class SignupScreen extends StatelessWidget {
           SignupViewmodel(AuthService(), DatabaseService(), StorageService()),
       child: Consumer<SignupViewmodel>(builder: (context, model, _) {
         return Scaffold(
-          body: Padding(
+          body: SingleChildScrollView(
             padding:
                 EdgeInsets.symmetric(horizontal: 1.sw * 0.05, vertical: 10.h),
             child: Column(
@@ -101,7 +101,7 @@ class SignupScreen extends StatelessWidget {
                     ),
                     InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, login);
+                          Navigator.pushReplacementNamed(context, login);
                         },
                         child: Text("Login",
                             style: body.copyWith(fontWeight: FontWeight.bold)))
